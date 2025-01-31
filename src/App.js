@@ -4,19 +4,27 @@ import Form from './Form';
 import './App.css';
 
 function App() {
- // Logic and other needed functions will go here
- const [ideas, setIdeas] = useState([]);
+  // Logic and other needed functions will go here
+  const [ideas, setIdeas] = useState([]);
 
- return (
-  //Your JSX code goes here
-  <main className='App'>
-    <h1>IdeaBox</h1>
-    {/* Conditional render to show message if no ideas */}
-    {!ideas.length && <h2>No ideas yet -- add some!</h2> }
-    <Form/>
-    {/* Pass ideas to Ideas component */}
-    <Ideas ideas={ ideas }/>
-  </main>
+  function addIdea(newIdea) {
+    setIdeas([...ideas, newIdea])
+  }
+
+  function deleteIdea(id){
+    const filteredIdeas = ideas.filter(idea => idea.id !== id)
+    setIdeas(filteredIdeas)
+  }
+
+  return (
+    //Your JSX code goes here
+    <main className='App'>
+      <h1>IdeaBox</h1>
+      {/* Conditional render to show message if no ideas */}
+      {!ideas.length && <h2>No ideas yet -- add some!</h2> }
+      <Form addIdea = { addIdea }/>
+      <Ideas ideas={ideas} deleteIdea={deleteIdea}/>
+    </main>
  )
 }
 
